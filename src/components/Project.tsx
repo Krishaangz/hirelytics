@@ -4,7 +4,7 @@ import { Button } from '@/components/ui/button';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
 import { useOrgStore } from '@/stores/orgStore';
 import { usePlanStore } from '@/stores/planStore';
-import { Upload, Users, BarChart3, FileText, User, Trash2, Settings } from 'lucide-react';
+import { Upload, Users, BarChart3, FileText, Trash2, Clock } from 'lucide-react';
 import UploadCandidate from '@/components/UploadCandidate';
 import CandidateCard from '@/components/CandidateCard';
 import ComparisonResults from '@/components/ComparisonResults';
@@ -73,7 +73,7 @@ const Project = () => {
   if (!currentProject) {
     return (
       <div className="container mx-auto px-4 py-8">
-        <Card className="hover-scale">
+        <Card>
           <CardContent className="flex flex-col items-center justify-center py-12">
             <FileText className="w-12 h-12 text-muted-foreground mb-4" />
             <h3 className="font-semibold mb-2">No project selected</h3>
@@ -118,17 +118,22 @@ const Project = () => {
       {/* Project Header */}
       <div className="flex items-center justify-between">
         <div className="space-y-2">
-          <h1 className="text-3xl font-poppins font-bold glow-text">{currentProject.name}</h1>
-          <p className="text-muted-foreground">
-            {candidates.length} candidate{candidates.length !== 1 ? 's' : ''} • 
-            {usage.comparisonsThisWeek}/{limits.weeklyComparisons} comparisons used this week
-          </p>
+          <h1 className="text-3xl font-poppins font-bold">{currentProject.name}</h1>
+          <div className="flex items-center space-x-4 text-muted-foreground">
+            <p>
+              {candidates.length} candidate{candidates.length !== 1 ? 's' : ''} • 
+              {usage.comparisonsThisWeek}/{limits.weeklyComparisons} comparisons used this week
+            </p>
+            <div className="flex items-center space-x-2">
+              <Clock className="w-4 h-4" />
+              <span className="text-sm">Active project</span>
+            </div>
+          </div>
         </div>
         <Button 
           variant="destructive" 
           size="sm"
           onClick={handleDeleteProject}
-          className="hover-scale"
         >
           <Trash2 className="w-4 h-4 mr-2" />
           Delete Project
@@ -137,7 +142,7 @@ const Project = () => {
 
       {/* Action Bar */}
       <div className="flex flex-wrap gap-4">
-        <Button onClick={() => setShowUpload(true)} className="hover-scale animate-pulse-glow">
+        <Button onClick={() => setShowUpload(true)}>
           <Upload className="w-4 h-4 mr-2" />
           Upload Candidate
         </Button>
@@ -145,7 +150,6 @@ const Project = () => {
           variant="outline" 
           onClick={handleRunComparison}
           disabled={selectedCandidates.length < 2 || !canRunComparison()}
-          className="hover-scale"
         >
           <BarChart3 className="w-4 h-4 mr-2" />
           Run AI Comparison ({selectedCandidates.length} selected)
@@ -153,26 +157,26 @@ const Project = () => {
       </div>
 
       {/* Usage Stats */}
-      <Card className="card-gradient hover-scale">
+      <Card className="card-gradient">
         <CardHeader>
           <CardTitle className="text-lg">Usage Overview</CardTitle>
         </CardHeader>
         <CardContent>
           <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
-            <div className="text-center animate-bounce-in animate-delay-100">
-              <p className="text-2xl font-bold glow-text">{candidates.length}</p>
+            <div className="text-center">
+              <p className="text-2xl font-bold">{candidates.length}</p>
               <p className="text-sm text-muted-foreground">Total Candidates</p>
             </div>
-            <div className="text-center animate-bounce-in animate-delay-200">
-              <p className="text-2xl font-bold glow-text">{selectedCandidates.length}</p>
+            <div className="text-center">
+              <p className="text-2xl font-bold">{selectedCandidates.length}</p>
               <p className="text-sm text-muted-foreground">Selected</p>
             </div>
-            <div className="text-center animate-bounce-in animate-delay-300">
-              <p className="text-2xl font-bold glow-text">{usage.comparisonsThisWeek}</p>
+            <div className="text-center">
+              <p className="text-2xl font-bold">{usage.comparisonsThisWeek}</p>
               <p className="text-sm text-muted-foreground">This Week</p>
             </div>
-            <div className="text-center animate-bounce-in animate-delay-400">
-              <p className="text-2xl font-bold glow-text">{limits.weeklyComparisons - usage.comparisonsThisWeek}</p>
+            <div className="text-center">
+              <p className="text-2xl font-bold">{limits.weeklyComparisons - usage.comparisonsThisWeek}</p>
               <p className="text-sm text-muted-foreground">Remaining</p>
             </div>
           </div>
@@ -181,14 +185,14 @@ const Project = () => {
 
       {/* Candidates Grid */}
       {candidates.length === 0 ? (
-        <Card className="card-gradient hover-scale">
+        <Card className="card-gradient">
           <CardContent className="flex flex-col items-center justify-center py-12">
-            <Users className="w-12 h-12 text-muted-foreground mb-4 animate-float" />
+            <Users className="w-12 h-12 text-muted-foreground mb-4" />
             <h3 className="font-semibold mb-2">No candidates yet</h3>
             <p className="text-muted-foreground text-center mb-4">
               Upload your first candidate to start building your talent pool
             </p>
-            <Button onClick={() => setShowUpload(true)} className="hover-scale animate-pulse-glow">
+            <Button onClick={() => setShowUpload(true)}>
               <Upload className="w-4 h-4 mr-2" />
               Upload First Candidate
             </Button>
@@ -196,14 +200,13 @@ const Project = () => {
         </Card>
       ) : (
         <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
-          {candidates.map((candidate, index) => (
-            <div key={candidate.id} className={`animate-slide-up animate-delay-${(index % 5 + 1) * 100}`}>
-              <CandidateCard
-                candidate={candidate}
-                isSelected={selectedCandidates.includes(candidate.id)}
-                onSelect={() => handleCandidateSelect(candidate.id)}
-              />
-            </div>
+          {candidates.map((candidate) => (
+            <CandidateCard
+              key={candidate.id}
+              candidate={candidate}
+              isSelected={selectedCandidates.includes(candidate.id)}
+              onSelect={() => handleCandidateSelect(candidate.id)}
+            />
           ))}
         </div>
       )}
