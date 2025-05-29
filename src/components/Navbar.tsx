@@ -27,7 +27,7 @@ const Navbar = ({ onNavigate, currentPage }: NavbarProps) => {
   };
 
   return (
-    <nav className="bg-white dark:bg-hirelytics-dark border-b border-border sticky top-0 z-50">
+    <nav className="bg-white dark:bg-hirelytics-dark border-b border-border sticky top-0 z-50 backdrop-blur-sm bg-opacity-95">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="flex justify-between items-center h-16">
           {/* Logo */}
@@ -35,7 +35,7 @@ const Navbar = ({ onNavigate, currentPage }: NavbarProps) => {
             <img 
               src="/lovable-uploads/5817ff25-1590-4a8c-a4e6-b962fdefaec7.png" 
               alt="Hirelytics" 
-              className="w-8 h-8 animate-glow"
+              className="w-8 h-8"
             />
             <span className="text-xl font-poppins font-bold text-primary">
               Hirelytics
@@ -63,6 +63,20 @@ const Navbar = ({ onNavigate, currentPage }: NavbarProps) => {
                     {currentProject.name}
                   </Button>
                 )}
+                <Button
+                  variant={currentPage === 'about' ? 'default' : 'ghost'}
+                  onClick={() => onNavigate('about')}
+                  className="font-medium"
+                >
+                  About
+                </Button>
+                <Button
+                  variant={currentPage === 'help' ? 'default' : 'ghost'}
+                  onClick={() => onNavigate('help')}
+                  className="font-medium"
+                >
+                  Help
+                </Button>
               </>
             )}
           </div>

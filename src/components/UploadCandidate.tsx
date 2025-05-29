@@ -13,7 +13,7 @@ import {
 } from '@/components/ui/dialog';
 import { useOrgStore } from '@/stores/orgStore';
 import { useToast } from '@/hooks/use-toast';
-import { Upload, FileText, User, X } from 'lucide-react';
+import { Upload, FileText, User, X, Loader2 } from 'lucide-react';
 
 interface UploadCandidateProps {
   projectId: string;
@@ -60,6 +60,10 @@ const UploadCandidate = ({ projectId, onClose }: UploadCandidateProps) => {
         variant: "destructive",
       });
     }
+  };
+
+  const handleCancel = () => {
+    onClose();
   };
 
   const handleSubmit = async (e: React.FormEvent) => {
@@ -122,7 +126,10 @@ const UploadCandidate = ({ projectId, onClose }: UploadCandidateProps) => {
     <Dialog open={true} onOpenChange={onClose}>
       <DialogContent className="max-w-2xl">
         <DialogHeader>
-          <DialogTitle>Upload New Candidate</DialogTitle>
+          <DialogTitle className="flex items-center space-x-2">
+            <User className="w-5 h-5" />
+            <span>Upload New Candidate</span>
+          </DialogTitle>
           <DialogDescription>
             Each candidate requires both a resume (PDF) and a character sketch (TXT) for AI analysis.
           </DialogDescription>
@@ -131,14 +138,16 @@ const UploadCandidate = ({ projectId, onClose }: UploadCandidateProps) => {
         <form onSubmit={handleSubmit} className="space-y-6">
           {/* Candidate Name */}
           <div className="space-y-2">
-            <Label htmlFor="candidateName">Candidate Name</Label>
+            <Label htmlFor="candidateName" className="text-sm font-medium">
+              Candidate Name *
+            </Label>
             <Input
               id="candidateName"
               placeholder="Enter full name"
               value={name}
               onChange={(e) => setName(e.target.value)}
-              required
               disabled={isLoading}
+              className="transition-all duration-200"
             />
           </div>
 
@@ -146,11 +155,11 @@ const UploadCandidate = ({ projectId, onClose }: UploadCandidateProps) => {
           <div className="grid md:grid-cols-2 gap-6">
             {/* Resume Upload */}
             <div className="space-y-3">
-              <Label className="flex items-center space-x-2">
+              <Label className="flex items-center space-x-2 text-sm font-medium">
                 <FileText className="w-4 h-4" />
-                <span>Resume/Portfolio (PDF)</span>
+                <span>Resume/Portfolio (PDF) *</span>
               </Label>
-              <div className="border-2 border-dashed border-border rounded-lg p-6 text-center">
+              <div className="relative border-2 border-dashed border-border rounded-lg p-6 text-center transition-all duration-200 hover:border-primary/50">
                 {resumeFile ? (
                   <div className="space-y-2">
                     <FileText className="w-8 h-8 mx-auto text-primary" />
@@ -163,6 +172,7 @@ const UploadCandidate = ({ projectId, onClose }: UploadCandidateProps) => {
                       variant="outline" 
                       size="sm"
                       onClick={() => setResumeFile(null)}
+                      disabled={isLoading}
                     >
                       <X className="w-3 h-3 mr-1" />
                       Remove
@@ -174,24 +184,28 @@ const UploadCandidate = ({ projectId, onClose }: UploadCandidateProps) => {
                     <p className="text-sm text-muted-foreground">
                       Drag & drop or click to upload
                     </p>
+                    <p className="text-xs text-muted-foreground">
+                      PDF files only
+                    </p>
                   </div>
                 )}
                 <input
                   type="file"
                   accept=".pdf"
                   onChange={handleResumeUpload}
-                  className="absolute inset-0 w-full h-full opacity-0 cursor-pointer"
+                  disabled={isLoading}
+                  className="absolute inset-0 w-full h-full opacity-0 cursor-pointer disabled:cursor-not-allowed"
                 />
               </div>
             </div>
 
             {/* Character Sketch Upload */}
             <div className="space-y-3">
-              <Label className="flex items-center space-x-2">
+              <Label className="flex items-center space-x-2 text-sm font-medium">
                 <User className="w-4 h-4" />
-                <span>Character Sketch (TXT)</span>
+                <span>Character Sketch (TXT) *</span>
               </Label>
-              <div className="border-2 border-dashed border-border rounded-lg p-6 text-center">
+              <div className="relative border-2 border-dashed border-border rounded-lg p-6 text-center transition-all duration-200 hover:border-primary/50">
                 {characterFile ? (
                   <div className="space-y-2">
                     <User className="w-8 h-8 mx-auto text-primary" />
@@ -204,6 +218,7 @@ const UploadCandidate = ({ projectId, onClose }: UploadCandidateProps) => {
                       variant="outline" 
                       size="sm"
                       onClick={() => setCharacterFile(null)}
+                      disabled={isLoading}
                     >
                       <X className="w-3 h-3 mr-1" />
                       Remove
@@ -215,13 +230,17 @@ const UploadCandidate = ({ projectId, onClose }: UploadCandidateProps) => {
                     <p className="text-sm text-muted-foreground">
                       Interview notes & insights
                     </p>
+                    <p className="text-xs text-muted-foreground">
+                      TXT files only
+                    </p>
                   </div>
                 )}
                 <input
                   type="file"
                   accept=".txt"
                   onChange={handleCharacterUpload}
-                  className="absolute inset-0 w-full h-full opacity-0 cursor-pointer"
+                  disabled={isLoading}
+                  className="absolute inset-0 w-full h-full opacity-0 cursor-pointer disabled:cursor-not-allowed"
                 />
               </div>
             </div>
@@ -230,22 +249,22 @@ const UploadCandidate = ({ projectId, onClose }: UploadCandidateProps) => {
           {/* Notes Preview */}
           {notes && (
             <div className="space-y-2">
-              <Label>Character Sketch Preview</Label>
+              <Label className="text-sm font-medium">Character Sketch Preview</Label>
               <Textarea
                 value={notes}
                 readOnly
-                className="bg-muted text-sm"
+                className="bg-muted text-sm resize-none"
                 rows={4}
               />
             </div>
           )}
 
           {/* Submit Buttons */}
-          <div className="flex justify-end space-x-2">
+          <div className="flex justify-end space-x-2 pt-4 border-t">
             <Button 
               type="button" 
               variant="outline" 
-              onClick={onClose}
+              onClick={handleCancel}
               disabled={isLoading}
             >
               Cancel
@@ -253,8 +272,16 @@ const UploadCandidate = ({ projectId, onClose }: UploadCandidateProps) => {
             <Button 
               type="submit" 
               disabled={isLoading || !resumeFile || !characterFile || !name.trim()}
+              className="min-w-[120px]"
             >
-              {isLoading ? 'Uploading...' : 'Upload Candidate'}
+              {isLoading ? (
+                <>
+                  <Loader2 className="w-4 h-4 mr-2 animate-spin" />
+                  Uploading...
+                </>
+              ) : (
+                'Upload Candidate'
+              )}
             </Button>
           </div>
         </form>

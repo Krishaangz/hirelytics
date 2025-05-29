@@ -7,6 +7,8 @@ import Signup from '@/components/Signup';
 import Dashboard from '@/components/Dashboard';
 import Project from '@/components/Project';
 import Settings from '@/components/Settings';
+import About from '@/components/About';
+import HelpCenter from '@/components/HelpCenter';
 import Navbar from '@/components/Navbar';
 
 const Index = () => {
@@ -30,13 +32,15 @@ const Index = () => {
   };
 
   // Show authenticated pages with navbar
-  if (isAuthenticated && ['dashboard', 'project', 'settings'].includes(currentPage)) {
+  if (isAuthenticated && ['dashboard', 'project', 'settings', 'about', 'help'].includes(currentPage)) {
     return (
       <>
         <Navbar onNavigate={handleNavigate} currentPage={currentPage} />
         {currentPage === 'dashboard' && <Dashboard onNavigate={handleNavigate} />}
         {currentPage === 'project' && <Project />}
         {currentPage === 'settings' && <Settings />}
+        {currentPage === 'about' && <About onNavigate={handleNavigate} />}
+        {currentPage === 'help' && <HelpCenter onNavigate={handleNavigate} />}
       </>
     );
   }

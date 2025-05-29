@@ -6,7 +6,7 @@ import { Label } from '@/components/ui/label';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
 import { useAuthStore } from '@/stores/authStore';
 import { useToast } from '@/hooks/use-toast';
-import { ArrowLeft, Loader2, Zap, Sparkles } from 'lucide-react';
+import { Eye, EyeOff, Loader2 } from 'lucide-react';
 
 interface LoginProps {
   onNavigate: (page: string) => void;
@@ -15,6 +15,7 @@ interface LoginProps {
 const Login = ({ onNavigate }: LoginProps) => {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
+  const [showPassword, setShowPassword] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
   const { login } = useAuthStore();
   const { toast } = useToast();
@@ -24,17 +25,17 @@ const Login = ({ onNavigate }: LoginProps) => {
     setIsLoading(true);
 
     try {
-      const success = await login(email, password);
+      const success = login(email, password);
       if (success) {
         toast({
           title: "Welcome back!",
-          description: "You've been successfully logged in.",
+          description: "You have successfully logged in.",
         });
         onNavigate('dashboard');
       } else {
         toast({
           title: "Login failed",
-          description: "Please check your credentials and try again.",
+          description: "Invalid email or password.",
           variant: "destructive",
         });
       }
@@ -50,39 +51,51 @@ const Login = ({ onNavigate }: LoginProps) => {
   };
 
   return (
-    <div className="min-h-screen animated-bg flex">
-      {/* Left Side - Login Form */}
-      <div className="flex-1 flex items-center justify-center p-8">
-        <div className="w-full max-w-md space-y-6 animate-slide-up">
-          <Button
-            variant="ghost"
-            onClick={() => onNavigate('landing')}
-            className="mb-4 hover-scale"
-          >
-            <ArrowLeft className="w-4 h-4 mr-2" />
-            Back to Home
-          </Button>
+    <div className="min-h-screen bg-gradient-to-br from-primary/20 via-background to-secondary/20 flex items-center justify-center p-4">
+      <div className="w-full max-w-6xl grid lg:grid-cols-2 gap-8 items-center">
+        {/* Left Side - Image */}
+        <div className="hidden lg:block">
+          <div className="relative">
+            <img
+              src="https://images.unsplash.com/photo-1559136555-9303baea8ebd?auto=format&fit=crop&w=800&h=600"
+              alt="AI Analytics Dashboard"
+              className="w-full h-[600px] object-cover rounded-2xl shadow-2xl"
+            />
+            <div className="absolute inset-0 bg-gradient-to-r from-primary/20 to-secondary/20 rounded-2xl"></div>
+            <div className="absolute bottom-8 left-8 text-white">
+              <h2 className="text-3xl font-poppins font-bold mb-2">
+                Welcome Back to Hirelytics
+              </h2>
+              <p className="text-lg opacity-90">
+                Continue analyzing and finding the perfect candidates
+              </p>
+            </div>
+          </div>
+        </div>
 
-          <Card className="card-gradient backdrop-blur-sm border-2 animate-bounce-in">
-            <CardHeader className="text-center">
-              <div className="flex items-center justify-center space-x-2 mb-4">
-                <img 
-                  src="/lovable-uploads/5817ff25-1590-4a8c-a4e6-b962fdefaec7.png" 
-                  alt="Hirelytics" 
-                  className="w-8 h-8"
-                />
-                <span className="text-2xl font-poppins font-bold text-primary">
-                  Hirelytics
-                </span>
-              </div>
-              <CardTitle className="text-2xl font-poppins glow-text">Welcome back</CardTitle>
-              <CardDescription className="animate-fade-in animate-delay-200">
-                Sign in to your account to continue
-              </CardDescription>
-            </CardHeader>
-            <CardContent>
+        {/* Right Side - Login Form */}
+        <div className="w-full max-w-md mx-auto animate-fade-in">
+          <div className="text-center mb-8">
+            <div className="flex items-center justify-center space-x-2 mb-6">
+              <img 
+                src="/lovable-uploads/5817ff25-1590-4a8c-a4e6-b962fdefaec7.png" 
+                alt="Hirelytics" 
+                className="w-10 h-10"
+              />
+              <span className="text-2xl font-poppins font-bold text-primary">
+                Hirelytics
+              </span>
+            </div>
+            <h1 className="text-3xl font-poppins font-bold mb-2">Sign In</h1>
+            <p className="text-muted-foreground">
+              Enter your credentials to access your account
+            </p>
+          </div>
+
+          <Card className="card-gradient">
+            <CardContent className="pt-6">
               <form onSubmit={handleSubmit} className="space-y-4">
-                <div className="space-y-2 animate-slide-in-right animate-delay-100">
+                <div className="space-y-2">
                   <Label htmlFor="email">Email</Label>
                   <Input
                     id="email"
@@ -92,48 +105,62 @@ const Login = ({ onNavigate }: LoginProps) => {
                     onChange={(e) => setEmail(e.target.value)}
                     required
                     disabled={isLoading}
-                    className="transition-all duration-300 focus:scale-105"
+                    className="transition-all duration-200"
                   />
                 </div>
-                <div className="space-y-2 animate-slide-in-right animate-delay-200">
+                
+                <div className="space-y-2">
                   <Label htmlFor="password">Password</Label>
-                  <Input
-                    id="password"
-                    type="password"
-                    placeholder="Enter your password"
-                    value={password}
-                    onChange={(e) => setPassword(e.target.value)}
-                    required
-                    disabled={isLoading}
-                    className="transition-all duration-300 focus:scale-105"
-                  />
+                  <div className="relative">
+                    <Input
+                      id="password"
+                      type={showPassword ? "text" : "password"}
+                      placeholder="Enter your password"
+                      value={password}
+                      onChange={(e) => setPassword(e.target.value)}
+                      required
+                      disabled={isLoading}
+                      className="pr-10 transition-all duration-200"
+                    />
+                    <button
+                      type="button"
+                      onClick={() => setShowPassword(!showPassword)}
+                      className="absolute inset-y-0 right-0 pr-3 flex items-center"
+                      disabled={isLoading}
+                    >
+                      {showPassword ? (
+                        <EyeOff className="h-4 w-4 text-muted-foreground" />
+                      ) : (
+                        <Eye className="h-4 w-4 text-muted-foreground" />
+                      )}
+                    </button>
+                  </div>
                 </div>
+
                 <Button 
                   type="submit" 
-                  className="w-full hover-scale animate-pulse-glow animate-delay-300" 
+                  className="w-full" 
                   disabled={isLoading}
+                  size="lg"
                 >
                   {isLoading ? (
                     <>
-                      <Loader2 className="w-4 h-4 mr-2 animate-spin" />
-                      Signing In...
+                      <Loader2 className="mr-2 h-4 w-4 animate-spin" />
+                      Signing in...
                     </>
                   ) : (
-                    <>
-                      <Zap className="w-4 h-4 mr-2" />
-                      Sign In
-                    </>
+                    'Sign In'
                   )}
                 </Button>
               </form>
               
-              <div className="mt-6 text-center animate-fade-in animate-delay-400">
+              <div className="mt-6 text-center">
                 <p className="text-sm text-muted-foreground">
                   Don't have an account?{' '}
                   <button
-                    type="button"
                     onClick={() => onNavigate('signup')}
-                    className="text-primary hover:underline font-medium story-link"
+                    className="text-primary hover:underline font-medium"
+                    disabled={isLoading}
                   >
                     Sign up
                   </button>
@@ -141,39 +168,15 @@ const Login = ({ onNavigate }: LoginProps) => {
               </div>
             </CardContent>
           </Card>
-        </div>
-      </div>
 
-      {/* Right Side - Animated Image */}
-      <div className="hidden lg:flex flex-1 items-center justify-center p-8">
-        <div className="relative w-full h-full max-w-lg">
-          <div className="absolute inset-0 rounded-3xl overflow-hidden animate-float">
-            <img
-              src="https://images.unsplash.com/photo-1551434678-e076c223a692?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=2070&q=80"
-              alt="Team collaboration"
-              className="w-full h-full object-cover"
-            />
-            <div className="absolute inset-0 bg-gradient-to-t from-primary/20 to-transparent"></div>
-          </div>
-          
-          {/* Floating Elements */}
-          <div className="absolute top-1/4 left-1/4 animate-bounce-in animate-delay-100">
-            <div className="w-16 h-16 bg-primary/20 backdrop-blur-sm rounded-full flex items-center justify-center">
-              <Sparkles className="w-8 h-8 text-primary animate-rotate" />
-            </div>
-          </div>
-          
-          <div className="absolute bottom-1/3 right-1/4 animate-bounce-in animate-delay-300">
-            <div className="w-12 h-12 bg-accent/30 backdrop-blur-sm rounded-full flex items-center justify-center">
-              <Zap className="w-6 h-6 text-primary" />
-            </div>
-          </div>
-          
-          <div className="absolute bottom-1/4 left-1/3 text-center animate-slide-up animate-delay-500">
-            <div className="bg-card/80 backdrop-blur-sm rounded-lg p-4 border">
-              <h3 className="font-semibold text-lg glow-text">Welcome Back!</h3>
-              <p className="text-sm text-muted-foreground">Ready to make smarter hiring decisions?</p>
-            </div>
+          <div className="mt-6 text-center">
+            <button
+              onClick={() => onNavigate('landing')}
+              className="text-sm text-muted-foreground hover:text-primary transition-colors"
+              disabled={isLoading}
+            >
+              ← Back to Home
+            </button>
           </div>
         </div>
       </div>
