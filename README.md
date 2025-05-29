@@ -53,8 +53,8 @@
 | Plan      | Limitations                                                          | Price                            |
 | --------- | -------------------------------------------------------------------- | -------------------------------- |
 | **Hire∅** | Compare up to **5 people** at once, only **once every 7 days**       | Free Forever                     |
-| **Hire+** | Compare up to **10 people** per session, **5x per week** (1/day max) | \$5/mo or \$50/year (save 17%)   |
-| **Hire%** | Compare up to **20 people**, **10x per week** (2/day max)            | \$10/mo or \$100/year (save 17%) |
+| **Hire+** | Compare up to **10 people** per session, **2x per week** (1/day max) | \$5/mo or \$50/year (save 17%)   |
+| **Hire%** | Compare up to **20 people**, **5x per week** (2/day max)            | \$20/mo or \$200/year (save 17%) |
 
 ---
 
