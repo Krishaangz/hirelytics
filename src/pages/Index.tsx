@@ -5,6 +5,8 @@ import Landing from '@/components/Landing';
 import Login from '@/components/Login';
 import Signup from '@/components/Signup';
 import Dashboard from '@/components/Dashboard';
+import Project from '@/components/Project';
+import Settings from '@/components/Settings';
 import Navbar from '@/components/Navbar';
 
 const Index = () => {
@@ -28,18 +30,8 @@ const Index = () => {
       <>
         <Navbar onNavigate={handleNavigate} currentPage={currentPage} />
         {currentPage === 'dashboard' && <Dashboard onNavigate={handleNavigate} />}
-        {currentPage === 'project' && (
-          <div className="container mx-auto px-4 py-8">
-            <h1 className="text-3xl font-poppins font-bold mb-8">Project Management</h1>
-            <p className="text-muted-foreground">Project features coming soon...</p>
-          </div>
-        )}
-        {currentPage === 'settings' && (
-          <div className="container mx-auto px-4 py-8">
-            <h1 className="text-3xl font-poppins font-bold mb-8">Settings</h1>
-            <p className="text-muted-foreground">Settings panel coming soon...</p>
-          </div>
-        )}
+        {currentPage === 'project' && <Project />}
+        {currentPage === 'settings' && <Settings />}
       </>
     );
   }
