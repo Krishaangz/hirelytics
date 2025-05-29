@@ -103,7 +103,7 @@
 
 **Krishang Saharia**
 \[📍 Bhilai, India]
-Author of *Cycle of Flaw* | Class 10 | Developer, Writer & Visionary
+Author of *Detective Kids Series* | Class 10 | Developer, Writer & Visionary
 
 ---
 
