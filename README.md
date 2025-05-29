@@ -1,73 +1,114 @@
-# Welcome to your Lovable project
+# 🔍 HireLytics
 
-## Project info
+**AI-Driven Resume & Portfolio Comparison Engine for Hiring Teams**
 
-**URL**: https://lovable.dev/projects/80ae3eff-4704-4f4c-bb20-e01a3229cf7e
+> Revolutionize your hiring process with **HireLytics** — a futuristic tool that uses advanced AI to help companies compare, evaluate, and hire the best talent faster than ever before.
 
-## How can I edit this code?
+---
 
-There are several ways of editing your application.
+## ✨ What is HireLytics?
 
-**Use Lovable**
+**HireLytics** is a web-based platform where companies and hiring teams can:
 
-Simply visit the [Lovable Project](https://lovable.dev/projects/80ae3eff-4704-4f4c-bb20-e01a3229cf7e) and start prompting.
+* ✅ Create an organization and manage multiple projects.
+* 📄 Upload paired applicant data (Resume/Portfolio PDF + Interview Character Sketch `.txt`).
+* 🤖 Use AI to analyze, compare, and rank applicants.
+* 📊 Get interactive analytics reports for each candidate.
+* 🌐 Invite teammates with unique links to collaborate.
 
-Changes made via Lovable will be committed automatically to this repo.
+---
 
-**Use your preferred IDE**
+## 🎯 Key Features
 
-If you want to work locally using your own IDE, you can clone this repo and push changes. Pushed changes will also be reflected in Lovable.
+### 🧠 AI-Powered Comparison
 
-The only requirement is having Node.js & npm installed - [install with nvm](https://github.com/nvm-sh/nvm#installing-and-updating)
+* Analyze up to **20 applicants** per session.
+* Pair each applicant with their **Resume (PDF)** and **Character Sketch (TXT)**.
+* AI ranks the **best-suited candidates** based on your company's criteria and insights from interviews.
 
-Follow these steps:
+### 📊 Visual Reports
 
-```sh
-# Step 1: Clone the repository using the project's Git URL.
-git clone <YOUR_GIT_URL>
+* Generate beautiful, interactive reports showing strengths, weak points, alignment with company needs, and potential growth.
+* Insightful candidate analytics at a glance.
 
-# Step 2: Navigate to the project directory.
-cd <YOUR_PROJECT_NAME>
+### 🏢 Project-Centric Organization
 
-# Step 3: Install the necessary dependencies.
-npm i
+* Organize hiring rounds by **projects** under your **organization**.
+* Each project has its own applicant pool and team access.
 
-# Step 4: Start the development server with auto-reloading and an instant preview.
-npm run dev
-```
+### 🤝 Team Collaboration
 
-**Edit a file directly in GitHub**
+* Invite users via a **link** or from registered users to collaborate on projects.
+* Real-time sync via local state (authStore.ts for now, Supabase later).
 
-- Navigate to the desired file(s).
-- Click the "Edit" button (pencil icon) at the top right of the file view.
-- Make your changes and commit the changes.
+### 🎨 Customizable Themes
 
-**Use GitHub Codespaces**
+* Default color scheme: **Light Blue**, **Dark Blue**, with **Neon Blue** icons.
+* Change colors anytime in **Account Settings → Appearance** using a built-in palette.
 
-- Navigate to the main page of your repository.
-- Click on the "Code" button (green button) near the top right.
-- Select the "Codespaces" tab.
-- Click on "New codespace" to launch a new Codespace environment.
-- Edit files directly within the Codespace and commit and push your changes once you're done.
+---
 
-## What technologies are used for this project?
+## 💰 Pricing Plans
 
-This project is built with:
+| Plan      | Limitations                                                          | Price                            |
+| --------- | -------------------------------------------------------------------- | -------------------------------- |
+| **Hire∅** | Compare up to **5 people** at once, only **once every 7 days**       | Free Forever                     |
+| **Hire+** | Compare up to **10 people** per session, **5x per week** (1/day max) | \$5/mo or \$50/year (save 17%)   |
+| **Hire%** | Compare up to **20 people**, **10x per week** (2/day max)            | \$10/mo or \$100/year (save 17%) |
 
-- Vite
-- TypeScript
-- React
-- shadcn-ui
-- Tailwind CSS
+---
 
-## How can I deploy this project?
+## 🛠 Tech Stack
 
-Simply open [Lovable](https://lovable.dev/projects/80ae3eff-4704-4f4c-bb20-e01a3229cf7e) and click on Share -> Publish.
+* **Frontend**: React Native + Vite
+* **Styling**: TailwindCSS, Lucide Icons
+* **Motion/UI**: Framer Motion
+* **Language**: TypeScript
+* **Storage (Coming Soon)**: Supabase
+* **Current State**: Stored locally in `authStore.ts`
+* **AI API**: Free, unlimited PDF and text analysis (uses open source / no-cost models via wrappers)
 
-## Can I connect a custom domain to my Lovable project?
+---
 
-Yes, you can!
+## 📂 Data Flow
 
-To connect a domain, navigate to Project > Settings > Domains and click Connect Domain.
+1. Create a Project.
+2. Upload paired files for each candidate:
 
-Read more here: [Setting up a custom domain](https://docs.lovable.dev/tips-tricks/custom-domain#step-by-step-guide)
+   * **Resume or Portfolio** as `.pdf`
+   * **Interview Sketch** as `.txt`
+3. AI processes each pair distinctly (no mixing).
+4. Generate top candidate recommendations based on data.
+5. Download or share results with your team.
+
+---
+
+## 🔒 Privacy & Security
+
+> HireLytics values data integrity. All uploaded documents are handled securely and remain private. In the future, Supabase will handle cloud-based storage with authentication and role-based access control.
+
+---
+
+## 🚀 Roadmap
+
+* 🔜 Supabase Integration (Database + Auth + File Storage)
+* 🔜 User roles and permissions
+* 🔜 Admin dashboard for usage analytics
+* 🔜 Team chat and feedback loops on candidate profiles
+* 🔜 Plugin-based AI model selector for premium users
+
+---
+
+## 🧑‍🎨 Developed by
+
+**Krishang Saharia**
+\[📍 Bhilai, India]
+Author of *Cycle of Flaw* | Class 10 | Developer, Writer & Visionary
+
+---
+
+## 📌 Final Thoughts
+
+> With **HireLytics**, we’re not just speeding up hiring—we’re elevating it to an art form.
+
+---
