@@ -14,7 +14,7 @@
 * 📄 Upload paired applicant data (Resume/Portfolio PDF + Interview Character Sketch `.txt`).
 * 🤖 Use AI to analyze, compare, and rank applicants.
 * 📊 Get interactive analytics reports for each candidate.
-* 🌐 Invite teammates with unique links to collaborate.
+* 🌐 Invite teammates with unique invite codes to collaborate.
 
 ---
 
@@ -22,7 +22,7 @@
 
 ### 🧠 AI-Powered Comparison
 
-* Analyze up to **20 applicants** per session.
+* Analyze up to **20 applicants** per session.*
 * Pair each applicant with their **Resume (PDF)** and **Character Sketch (TXT)**.
 * AI ranks the **best-suited candidates** based on your company's criteria and insights from interviews.
 
@@ -38,7 +38,7 @@
 
 ### 🤝 Team Collaboration
 
-* Invite users via a **link** or from registered users to collaborate on projects.
+* Invite users via a **code** from registered users to collaborate on projects.
 * Real-time sync via local state (authStore.ts for now, Supabase later).
 
 ### 🎨 Customizable Themes
@@ -72,7 +72,7 @@
 
 ## 📂 Data Flow
 
-1. Create a Project.
+1. Create a Project in an organisation.
 2. Upload paired files for each candidate:
 
    * **Resume or Portfolio** as `.pdf`
