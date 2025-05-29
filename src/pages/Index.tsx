@@ -11,7 +11,12 @@ import Navbar from '@/components/Navbar';
 
 const Index = () => {
   const [currentPage, setCurrentPage] = useState('landing');
-  const { isAuthenticated } = useAuthStore();
+  const { isAuthenticated, applyTheme } = useAuthStore();
+
+  // Apply theme on app load
+  useEffect(() => {
+    applyTheme();
+  }, [applyTheme]);
 
   // Redirect authenticated users to dashboard
   useEffect(() => {

@@ -7,6 +7,13 @@ interface User {
   email: string;
   name: string;
   organizationId?: string;
+  preferences: {
+    theme: 'light' | 'dark';
+    colorPalette: 'default' | 'purple' | 'green' | 'orange' | 'red';
+    notifications: boolean;
+    language: string;
+    timezone: string;
+  };
 }
 
 interface AuthState {
@@ -16,6 +23,8 @@ interface AuthState {
   signup: (name: string, email: string, password: string) => Promise<boolean>;
   logout: () => void;
   updateUser: (user: Partial<User>) => void;
+  updatePreferences: (preferences: Partial<User['preferences']>) => void;
+  applyTheme: () => void;
 }
 
 export const useAuthStore = create<AuthState>()(
@@ -32,6 +41,13 @@ export const useAuthStore = create<AuthState>()(
           id: '1',
           email,
           name: email.split('@')[0],
+          preferences: {
+            theme: 'light',
+            colorPalette: 'default',
+            notifications: true,
+            language: 'en',
+            timezone: 'UTC'
+          }
         };
         
         set({ user: mockUser, isAuthenticated: true });
@@ -46,6 +62,13 @@ export const useAuthStore = create<AuthState>()(
           id: Date.now().toString(),
           email,
           name,
+          preferences: {
+            theme: 'light',
+            colorPalette: 'default',
+            notifications: true,
+            language: 'en',
+            timezone: 'UTC'
+          }
         };
         
         set({ user: mockUser, isAuthenticated: true });
@@ -60,6 +83,33 @@ export const useAuthStore = create<AuthState>()(
         const { user } = get();
         if (user) {
           set({ user: { ...user, ...userData } });
+        }
+      },
+
+      updatePreferences: (preferences: Partial<User['preferences']>) => {
+        const { user } = get();
+        if (user) {
+          const updatedUser = {
+            ...user,
+            preferences: { ...user.preferences, ...preferences }
+          };
+          set({ user: updatedUser });
+          get().applyTheme();
+        }
+      },
+
+      applyTheme: () => {
+        const { user } = get();
+        if (user) {
+          // Apply theme
+          if (user.preferences.theme === 'dark') {
+            document.documentElement.classList.add('dark');
+          } else {
+            document.documentElement.classList.remove('dark');
+          }
+          
+          // Apply color palette
+          document.documentElement.setAttribute('data-color-palette', user.preferences.colorPalette);
         }
       },
     }),

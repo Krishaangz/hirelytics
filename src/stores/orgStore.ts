@@ -34,9 +34,11 @@ interface OrgState {
   currentOrg: Organization | null;
   currentProject: Project | null;
   createOrganization: (name: string, createdBy: string) => Organization;
+  deleteOrganization: (orgId: string) => void;
   joinOrganization: (inviteCode: string, userId: string) => boolean;
   setCurrentOrg: (org: Organization) => void;
   createProject: (name: string, createdBy: string) => Project | null;
+  deleteProject: (projectId: string) => void;
   setCurrentProject: (project: Project) => void;
   addCandidate: (projectId: string, candidate: Omit<Candidate, 'id' | 'uploadedAt'>) => void;
   getCandidates: (projectId: string) => Candidate[];
@@ -65,6 +67,15 @@ export const useOrgStore = create<OrgState>()(
         }));
         
         return newOrg;
+      },
+
+      deleteOrganization: (orgId: string) => {
+        set(state => ({
+          organizations: state.organizations.filter(org => org.id !== orgId),
+          projects: state.projects.filter(project => project.organizationId !== orgId),
+          currentOrg: state.currentOrg?.id === orgId ? null : state.currentOrg,
+          currentProject: state.currentProject?.organizationId === orgId ? null : state.currentProject,
+        }));
       },
 
       joinOrganization: (inviteCode: string, userId: string) => {
@@ -110,6 +121,13 @@ export const useOrgStore = create<OrgState>()(
         }));
         
         return newProject;
+      },
+
+      deleteProject: (projectId: string) => {
+        set(state => ({
+          projects: state.projects.filter(project => project.id !== projectId),
+          currentProject: state.currentProject?.id === projectId ? null : state.currentProject,
+        }));
       },
 
       setCurrentProject: (project: Project) => {
